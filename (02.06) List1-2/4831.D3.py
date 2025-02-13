@@ -1,8 +1,5 @@
 # [파이썬 S/W 문제해결 기본] 1일차 - 전기버스
 
-import sys
-sys.stdin = open("input.txt", "r")
-
 T = int(input())
 
 for tc in range(1, T+1):
