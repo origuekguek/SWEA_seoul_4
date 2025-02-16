@@ -1,39 +1,32 @@
 # [파이썬 S/W 문제해결 기본] 1일차 - 전기버스
 
-T = int(input())
+import sys
+sys.stdin = open(r"C:\Users\twony\Desktop\algorithm_hw\SWEA_seoul_4\(02.06) List1-2\input.txt", "r")
 
+T = int(input())
 for tc in range(1, T+1):
     K, N, M = map(int, input().split())
-    charge_stops = list(map(int, input().split()))
-    fuel = 0
-    cnt = 0
+    charge_idxes = list(map(int, input().split()))
 
-    # 연료가 표시된 버스 정류장 생성
-    bus_stops = [0]*(N+fuel+K+1)
-    for _ in range(M):
-        bus_stops[charge_stops[_]] = K
-        # bus_stops[0] = K
+    stops = [0] * (N + 1)
+    for charge_idx in charge_idxes:
+        stops[charge_idx] = 1
 
-    print(f'K = {K} N = {N} M = {M} ')
-    print(bus_stops)
+    cur_pos = 0 
+    count = 0  
 
-    i = 0
-    while i <= N-K-fuel:
-        if i > N - fuel - K:
+    while cur_pos + K < N:
+        next_pos = cur_pos + K
+        
+        # 충전소 찾을 때까지 뒤로
+        while cur_pos < next_pos and stops[next_pos] == 0:
+            next_pos -= 1
+        # 만약 충전소 못찾았으면 count = 0
+        if cur_pos == next_pos:
+            count = 0
             break
-        else:
-            print(f'처음 인덱스 = {i}')
-            for j in range(fuel+K+1):         # 연료 범위 안에서 이동
-                if bus_stops[i+K-j] == K:  # K만큼 이동해서 거꾸로 순회하며 충전소 보이면 충전
-                    cnt += 1             # 충전 횟수 +1
-                    fuel = j  # 연료 사용 후 충전
-                    i += fuel + K - j  # 충전한 정류장 인덱스로 이동
 
-                else:
-                    i -= fuel + K - j - 1   # 한 칸 줄이고 다시 탐색
+        cur_pos = next_pos
+        count += 1
 
-        print(f'연료량 = {fuel}')
-        print(f'이동할 거리 = {fuel + K - j}')
-        print(f'변경 인덱스 = {i}')
-
-    print(f'#{tc} {cnt}')
+    print(f'#{tc} {count}')

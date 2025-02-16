@@ -1,3 +1,8 @@
+# Gravity
+
+import sys
+sys.stdin = open(r"C:\Users\twony\Desktop\algorithm_hw\SWEA_seoul_4\IM_prepare\input.txt", "r")
+
 T = int(input())
 
 for tc in range(1, T + 1):
